@@ -4,9 +4,10 @@ require 'logger'##
 class SendPacket < Controller
   def start
     @switch = Hash.new{ |hash,key| hash[key] = {} }
-    @log = Logger.new('foo.log',7)##
+    t = Time.now##
+    str = t.strftime("%Y%m%d%H%M%S")##
+    @log = Logger.new('./log/' + str + '.log')##
     @log.level = Logger::DEBUG##
-
   end
 
 
@@ -14,10 +15,11 @@ class SendPacket < Controller
   def switch_ready dpid
     @switch[dpid] = {}
     puts dpid.to_hex
-    @log.debug("message!!\n")##
+    @log.debug("------------DEBUG!------------\n")##
   end
 
   def packet_in dpid, message
+    @log.debug("saddr:" + message.ipv4_saddr.to_s)##
     @switch[dpid][message.macsa] = message.in_port
     port = @switch[dpid][message.macda]
     if port
