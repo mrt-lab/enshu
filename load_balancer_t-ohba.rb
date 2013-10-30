@@ -38,7 +38,7 @@ class MyLoadBalancer < Controller
    address = '192.168.0.' + addr.to_s
    request = Pio::Arp::Request.new(
      :source_mac => '11:22:33:44:55:66',
-     :sender_protocol_address => '192.168.0.1',
+     :sender_protocol_address => '192.168.0.11',
      :target_protocol_address => address
    )
    send_packet_out(
